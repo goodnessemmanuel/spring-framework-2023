@@ -1,4 +1,4 @@
-package com.ocheejeh.learnspringframework02.demodependencyinjection;
+package com.ocheejeh.learnspringframework02.dependencyinjection.example_a0;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
