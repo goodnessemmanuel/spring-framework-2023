@@ -1,10 +1,14 @@
 package com.ocheejeh.learnspringframework02.game;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
+// note: default qualifier name is snake case of intended class e.g.
+// "SuperContraGame" = "superContraGame"
+@Qualifier("SuperContraGameQualifier")
 public class SuperContraGame implements GamingConsole{
-    public void up(){
+    public void up() {
         System.out.println("Up");
     }
 

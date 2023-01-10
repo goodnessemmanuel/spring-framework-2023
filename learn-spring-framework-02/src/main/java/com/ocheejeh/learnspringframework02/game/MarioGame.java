@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 @Component //spring is able to create object for us when needed
-@Primary //components that implements the same interface uses this to order priority
+@Primary //Give this bean preference when multiple GamingConsole objects are being considered for autowiring
 public class MarioGame implements GamingConsole {
 
     @Override
