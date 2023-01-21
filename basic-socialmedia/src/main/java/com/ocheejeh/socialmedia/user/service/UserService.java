@@ -23,6 +23,6 @@ public class UserService {
     }
 
     public User findUserById(Integer id) {
-      return users.stream().filter(u -> u.getId().equals(id)).findFirst().get();
+      return users.stream().filter(u -> u.getId().equals(id)).findFirst().orElse(null);
     }
 }

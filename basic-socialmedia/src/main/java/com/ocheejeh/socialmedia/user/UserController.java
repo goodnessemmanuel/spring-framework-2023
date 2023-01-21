@@ -1,5 +1,6 @@
 package com.ocheejeh.socialmedia.user;
 
+import com.ocheejeh.socialmedia.exception.UserNotFoundException;
 import com.ocheejeh.socialmedia.user.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,10 @@ public class UserController {
 
     @GetMapping("/{id}")
     public User getUser(@PathVariable Integer id){
+        User user = userService.findUserById(id);
+        if(user == null){
+            throw new UserNotFoundException("id: " + id);
+        }
         return userService.findUserById(id);
     }
 }
