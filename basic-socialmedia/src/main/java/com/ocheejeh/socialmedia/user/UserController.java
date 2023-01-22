@@ -2,24 +2,19 @@ package com.ocheejeh.socialmedia.user;
 
 import com.ocheejeh.socialmedia.exception.UserNotFoundException;
 import com.ocheejeh.socialmedia.user.service.UserService;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
-
+    private final Logger LOG = LoggerFactory.getLogger(getClass());
     private final UserService userService;
 
     public UserController(UserService userService) {
@@ -38,5 +33,17 @@ public class UserController {
             throw new UserNotFoundException("id: " + id);
         }
         return userService.findUserById(id);
+    }
+
+    @PostMapping
+    public ResponseEntity<User> createUser(@RequestBody User user){
+        User newUser = userService.save(user);
+        //compose the current location of the newly created user and return it as response
+        URI location = ServletUriComponentsBuilder.fromCurrentRequestUri()
+                .path("/{id}")
+                .buildAndExpand(newUser.getId())
+                .toUri();
+        LOG.debug("New user created, location is {}", location);
+        return ResponseEntity.created(location).build();
     }
 }
